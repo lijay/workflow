@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20140410133650) do
 
   create_table "steps", force: true do |t|
     t.integer  "project_id"
-    t.integer  "step_no"
+    t.integer  "no"
     t.string   "name"
     t.string   "memo"
     t.boolean  "finished"
