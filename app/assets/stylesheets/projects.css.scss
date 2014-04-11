@@ -1,8 +1,22 @@
 // Place all the styles related to the projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.container {
-    width: 800px;
+.projectlist {
+    padding-bottom: 40px;
+}
+
+.cmd {
+    height: 20px;
+    padding-bottom: 8px;
+}
+
+.list {
+    clear: both;
+    padding-bottom: 40px;
+}
+
+.projects {
+    clear: both;
 }
 
 ol.progtrckr {

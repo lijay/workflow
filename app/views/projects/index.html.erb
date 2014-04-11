@@ -1,20 +1,24 @@
 <div class="span12">
-	<div class="project">
-		<%= link_to("New Project", new_project_path, :class => "btn btn-mini btn-primary pull-right") %>
-
+	<h1>賴明姿的工作流程表</h1>
+	<div class="projectlist">
+		<div class="cmd">
+			<%= link_to("建立新專案", new_project_path, :class => "btn btn-mini btn-primary pull-right") %>
+		</div>
+		<div class="projects">
 		<% @projects.each do |project| %>
-		<div><%= project.title %></div>
+		<div><%= project.title %>&nbsp;<%= link_to("刪除此專案", project_path(project), :method => :delete, :class => "btn btn-mini pull-right", :confirm => "確定要刪除嗎?") %></div>
 		<div class="list">
 			<div class="container">
 			<ol class="progtrckr" data-progtrckr-steps="5">
-			    <li class="progtrckr-done">Order Processing</li><!--
-			 --><li class="progtrckr-done">Pre-Production</li><!--
-			 --><li class="progtrckr-done">In Production</li><!--
-			 --><li class="progtrckr-done">Shipped</li><!--
-			 --><li class="progtrckr-todo">Delivered</li>
+			    <li class="progtrckr-done">第一階段</li><!--
+			 --><li class="progtrckr-done">第二階段</li><!--
+			 --><li class="progtrckr-done">第三階段</li><!--
+			 --><li class="progtrckr-done">第四階段</li><!--
+			 --><li class="progtrckr-todo">第五階段</li>
 			</ol>
 			</div>
 		</div>
 		<% end %>
+		</div>
 	</div>
 </div>
