@@ -1,0 +1,21 @@
+<%= stylesheet_link_tag 'projects' %>
+<div class="span12">
+	<div class="project">
+		<%= link_to("New Project", new_project_path, :class => "btn btn-mini btn-primary pull-right") %>
+
+		<% @projects.each do |project| %>
+		<div><%= project.title %></div>
+		<div class="list">
+			<div class="container">
+			<ol class="progtrckr" data-progtrckr-steps="5">
+			    <li class="progtrckr-done">Order Processing</li><!--
+			 --><li class="progtrckr-done">Pre-Production</li><!--
+			 --><li class="progtrckr-done">In Production</li><!--
+			 --><li class="progtrckr-done">Shipped</li><!--
+			 --><li class="progtrckr-todo">Delivered</li>
+			</ol>
+			</div>
+		</div>
+		<% end %>
+	</div>
+</div>
