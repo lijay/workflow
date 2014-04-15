@@ -6,15 +6,22 @@
 		</div>
 		<div class="projects">
 		<% @projects.each do |project| %>
-		<div><%= project.title %>&nbsp;<%= link_to("刪除此專案", project_path(project), :method => :delete, :class => "btn btn-mini pull-right", :confirm => "確定要刪除嗎?") %></div>
+		<div>
+			<%= project.title %>&nbsp;
+			<div class="pull-right">
+			<% if current_user && project.editable_by?(current_user) %>
+			<%= link_to("Delete", project_path(project), :method => :delete, :class => "btn btn-mini", :confirm => "確定要刪除嗎?") %>
+			<%= link_to("Edit", edit_project_path(project), :class => "btn btn-mini") %>
+			<% end %>
+			</div>
+		</div>
 		<div class="list">
 			<div class="container">
-			<ol class="progtrckr" data-progtrckr-steps="5">
-			    <li class="progtrckr-done">第一階段</li><!--
-			 --><li class="progtrckr-done">第二階段</li><!--
-			 --><li class="progtrckr-done">第三階段</li><!--
-			 --><li class="progtrckr-done">第四階段</li><!--
-			 --><li class="progtrckr-todo">第五階段</li>
+			<ol class="progtrckr" data-progtrckr-steps="<%= project.steps.count %>">
+			    <% project.steps.each do |step| 
+			    %><li class="progtrckr-<%= step.finished ? 'done' : 'todo' %>" 
+			    data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-html="true" data-content="<%=step.memo%>" ><%= link_to(step.name, edit_project_step_path(project, step))%></li><!--
+			 	--><% end %>
 			</ol>
 			</div>
 		</div>
@@ -22,3 +29,8 @@
 		</div>
 	</div>
 </div>
+<% content_for :javascripts do %>
+<script type="text/javascript">
+	$('.progtrckr li').popover();
+</script>
+<% end %>

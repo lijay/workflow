@@ -1,0 +1,10 @@
+<div class="span12">
+	<%= simple_form_for @project do |f| %>
+		<%= f.input :title, :input_html =>  { :class => "input_xxlarge" } %>
+		<%= f.input :description, :input_html => { :class => "input_xxlarge" } %>
+		<div class="form-actions">
+			<%= f.submit "更新", :disabled_with => "處理中...", :class => "btn btn-primary" %>
+			<%= link_to("取消", projects_path, :class => "btn") %>
+		</di>
+	<% end %>
+</div>
