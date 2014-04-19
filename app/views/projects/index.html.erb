@@ -20,7 +20,7 @@
 			<ol class="progtrckr" data-progtrckr-steps="<%= project.steps.count %>">
 			    <% project.steps.each do |step| 
 			    %><li class="progtrckr-<%= step.finished ? 'done' : 'todo' %>" 
-			    data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-html="true" data-content="<%=step.memo%>" ><%= link_to(step.name, edit_project_step_path(project, step))%></li><!--
+			    data-container="body" data-toggle="popover" data-trigger="click" data-placement="top" data-html="true" data-content='<%=step.memo%><br/><%= link_to("Edit", edit_project_step_path(project, step))%>' ><%= link_to(step.name, finish_project_step_path(project, step), :confirm => "確定修改到要到這個步驟嗎？")%></li><!--
 			 	--><% end %>
 			</ol>
 			</div>

@@ -4,6 +4,8 @@ Workflow::Application.routes.draw do
   root :to => 'projects#index'
 
   resources :projects do
-  	resources :steps
+  	resources :steps do
+  		get 'finish', :on => :member
+  	end
   end
 end
