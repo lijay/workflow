@@ -13,6 +13,10 @@ class Project < ActiveRecord::Base
 			step.name = "Step#{step.no}"
 			step.finished = false
 			step.save
+
+			item = step.items.build()
+			item.summary = "item1"
+			item.save
 		end
 	end
 
