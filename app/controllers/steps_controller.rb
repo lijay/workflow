@@ -1,14 +1,16 @@
 class StepsController < ApplicationController
 
 	before_action :login_required, :only => [ :edit, :update, :finished ]
+	before_action :get_project_step
+
 	def edit
-		@project = Project.find(params[:project_id])
-		@step = @project.steps.find(params[:id])
+		# @project = Project.find(params[:project_id])
+		# @step = @project.steps.find(params[:id])
 	end
 
 	def update
-		@project = Project.find(params[:project_id])
-		@step = @project.steps.find(params[:id])
+		# @project = Project.find(params[:project_id])
+		# @step = @project.steps.find(params[:id])
 
 		if @step.update(step_params)
 			redirect_to projects_path
@@ -18,10 +20,21 @@ class StepsController < ApplicationController
 	end
 
 	def finish
-		@project = current_user.projects.find(params[:project_id])
-		@step = @project.steps.find(params[:id])
 		move_to_this_step(@project, @step)
 		redirect_to projects_path
+	end
+
+	def content
+		respond_to do |format|
+			format.html { render :layout => !request.xhr? }
+		end
+	end
+
+	private
+
+	def get_project_step
+		@project = current_user.projects.find(params[:project_id])
+		@step = @project.steps.find(params[:id])
 	end
 
 	def move_to_this_step(project, step)

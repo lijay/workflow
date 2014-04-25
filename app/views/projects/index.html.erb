@@ -19,8 +19,7 @@
 			<div class="container">
 			<ol class="progtrckr" data-progtrckr-steps="<%= project.steps.count %>">
 			    <% project.steps.each do |step| 
-			    %><li class="progtrckr-<%= step.finished ? 'done' : 'todo' %>" 
-			    data-container="body" data-toggle="popover" data-trigger="click" data-placement="top" data-html="true" data-content='<%=step.memo%><br/><%= link_to("Edit", edit_project_step_path(project, step))%>' ><%= link_to(step.name, finish_project_step_path(project, step), :confirm => "確定修改到要到這個步驟嗎？")%></li><!--
+			    %><li class="progtrckr-<%= step.finished ? 'done' : 'todo' %>" data-poload="<%= content_project_step_path(project, step) %>"><%= link_to(step.name, finish_project_step_path(project, step), :confirm => "確定修改到要到這個步驟嗎？" )%></li><!--
 			 	--><% end %>
 			</ol>
 			</div>
@@ -31,6 +30,46 @@
 </div>
 <% content_for :javascripts do %>
 <script type="text/javascript">
-	$('.progtrckr li').popover();
+	//$('.progtrckr li').popover();
+	// alert($('*[data-poload]').length);
+	var registered = [];
+	$('*[data-poload]').hover(function() {
+	    var e=$(this);
+	    e.unbind();
+	    $.get(e.data('poload'),function(d) {
+	    	$.each(registered, function(i,o) { o.popover('hide'); });
+	        e.popover({content: d, html: true, placement: 'bottom'}).popover('show');
+	        registered.push(e);
+	    });
+	});
+
+
+	$(document).on('click', 'input[type=checkbox]', function(event){
+    	//console.log($(this).data('id'));
+    	var el = $(this);
+    	var path = (el[0].checked) ? el.data('uncheck') : el.data('check');
+    	$.get(path, function(){ 
+    		if(el[0].checked)
+    			el.parent().addClass('deleted')
+    		else
+    			el.parent().removeClass('deleted')
+    	});
+	});
+
+	// $('.progtrckr li').popover({ content: function(){  
+	// 	var o = $(this);
+	// 	$.when(ajaxCall(o.data('poload'))).then(function(o){ alert(o); });
+	// 	alert(1);
+	// }, trigger:'hover', placement: 'bottom' });
+
+
+	// function ajaxCall(url){
+	// 	var deferred = $.Deferred();   //宣告Deferred物件
+	// 	$.get(url, function(d){
+	// 		deferred.resolve(d);
+	// 	});
+	// 	return deferred.promise();
+	// }
+
 </script>
 <% end %>

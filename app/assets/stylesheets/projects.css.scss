@@ -76,3 +76,14 @@ ol.progtrckr li.progtrckr-todo:before {
     font-size: 1.5em;
     bottom: -1.6em;
 }
+
+.item-list {
+    .item {
+        width: 120px;
+        clear: both;
+        input[type=checkbox] { float: left; }
+        label { float: right; }
+
+        &.deleted label { text-decoration:line-through; }
+    }
+}

@@ -6,6 +6,12 @@ Workflow::Application.routes.draw do
   resources :projects do
   	resources :steps do
   		get 'finish', :on => :member
+  		get 'content', :on => :member
+
+  		resources :items do
+        get 'check', :on => :member
+        get 'uncheck', :on => :member
+      end
   	end
   end
 end

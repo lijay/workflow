@@ -14,9 +14,11 @@ class Project < ActiveRecord::Base
 			step.finished = false
 			step.save
 
-			item = step.items.build()
-			item.summary = "item1"
-			item.save
+			3.times do |i|
+				item = step.items.build()
+				item.summary = "item#{i+1}"
+				item.save
+			end
 		end
 	end
 
