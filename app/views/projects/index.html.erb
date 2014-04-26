@@ -19,7 +19,7 @@
 			<div class="container">
 			<ol class="progtrckr" data-progtrckr-steps="<%= project.steps.count %>">
 			    <% project.steps.each do |step| 
-			    %><li class="progtrckr-<%= step.finished ? 'done' : 'todo' %>" data-poload="<%= content_project_step_path(project, step) %>"><%= link_to(step.name, finish_project_step_path(project, step), :confirm => "確定修改到要到這個步驟嗎？" )%></li><!--
+			    %><li class="progtrckr-<%= step.finished ? 'done' : 'todo' %>" data-poload="<%= content_project_step_path(project, step) %>"><%= link_to(step.name, finish_project_step_path(project, step), :confirm => "確定修改到要到這個步驟嗎？", :id => "link-#{project.id}-#{step.id}" )%></li><!--
 			 	--><% end %>
 			</ol>
 			</div>
@@ -32,14 +32,25 @@
 <script type="text/javascript">
 	//$('.progtrckr li').popover();
 	// alert($('*[data-poload]').length);
-	var registered = [];
+	//var registered = [];
 	$('*[data-poload]').hover(function() {
 	    var e=$(this);
-	    e.unbind();
-	    $.get(e.data('poload'),function(d) {
-	    	$.each(registered, function(i,o) { o.popover('hide'); });
+
+	    if(e.attr('poped') == 'true')
+	    	return;
+	    e.attr('poped', 'true');
+	    //e.unbind();
+	    $.get(e.data('poload'), { "_": $.now() }, function(d) {
+	    	$.each($('*[poped]'), function(i,o) { 
+	    		var q = $(o);
+	    		//拿掉其他popover 項目
+	    		if(q[0] != e[0]) {
+		    		q.popover('destroy');
+		    		q.removeAttr('poped');
+	    		}
+	    	});
 	        e.popover({content: d, html: true, placement: 'bottom'}).popover('show');
-	        registered.push(e);
+	       	// registered.push(e);
 	    });
 	});
 
@@ -47,12 +58,16 @@
 	$(document).on('click', 'input[type=checkbox]', function(event){
     	//console.log($(this).data('id'));
     	var el = $(this);
-    	var path = (el[0].checked) ? el.data('uncheck') : el.data('check');
-    	$.get(path, function(){ 
+    	var path = (el[0].checked) ? el.data('check') : el.data('uncheck');
+    	$.get(path, { "_": $.now() }, function(r){ 
     		if(el[0].checked)
     			el.parent().addClass('deleted')
     		else
     			el.parent().removeClass('deleted')
+    		if(r.done){
+    			if(confirm('已完成所有項目，要標記為完成嗎？'))
+    				location.href = $('#'+ el.data('link')).attr('href');
+    		}
     	});
 	});
 

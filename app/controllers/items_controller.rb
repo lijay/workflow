@@ -6,8 +6,14 @@ class ItemsController < ApplicationController
 		@item.checked = true;
 		@item.save
 
+
+		done = true
+		@item.step.items.each do |i|
+			done = false if !i.checked
+		end
+
 		respond_to do |format|
-			format.html { render :json => { success: true } }
+			format.html { render :json => { success: true, done: done }, :content_type => 'application/json' }
 		end
 	end
 
@@ -16,7 +22,7 @@ class ItemsController < ApplicationController
 		@item.save
 
 		respond_to do |format|
-			format.html { render :json => { success: true } }
+			format.html { render :json => { success: true, done: false }, :content_type => 'application/json' }
 		end
 	end
 

@@ -1,7 +1,7 @@
 <div class="item-list">
 <% @step.items.each do |i| %>
 	<div class="item <%= "deleted" if i.checked %>">
-	<input type="checkbox" id="item<%= i.id %>" data-check="<%= check_project_step_item_path(@project, @step, i) %>" data-uncheck="<%= uncheck_project_step_item_path(@project, @step, i) %>" <%= "checked" if i.checked %> /><label for="item<%= i.id %>"><%= i.summary %></label>
+	<input type="checkbox" id="item<%= i.id %>" data-check="<%= check_project_step_item_path(@project, @step, i) %>" data-uncheck="<%= uncheck_project_step_item_path(@project, @step, i) %>" data-link="<%= "link-#{@project.id}-#{@step.id}"  %>" <%= "checked" if i.checked %>/><label for="item<%= i.id %>"><%= i.summary %></label>
 	</div>
 <% end %>
 </div>
